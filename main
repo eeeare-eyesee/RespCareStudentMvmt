@@ -1,0 +1,196 @@
+SELECT 
+t1.EMPLOYEE
+--,t1.SUBJECT
+--,t1.ACTION_CODE
+,t1.DATE_STAMP
+--,t1.FIELD_NAME
+,t1.OLD_VALUE as [Old FTE]
+,t1.NEW_VALUE as [New FTE]
+,t2.OLD_VALUE as [Old Job Code]
+,t2.NEW_VALUE as [New Job Code]
+--,t3.OLD_VALUE
+--,t3.NEW_VALUE
+--,t3.DATE_STAMP
+--,t4.NEW_VALUE as [Resp Care Prac Apprentice Cost Center]
+--,t5.OLD_VALUE
+--,t5.NEW_VALUE
+--,t5.DATE_STAMP
+--,t6.NEW_VALUE as [Resp Care Prac Cost Center]
+--,t7.OLD_VALUE
+--,t7.NEW_VALUE
+from 
+
+
+(
+select distinct
+
+EMPLOYEE
+,SUBJECT
+,ACTION_CODE
+,DATE_STAMP
+,FIELD_NAME
+,OLD_VALUE
+,NEW_VALUE
+,EMPLOYEE + DATE_STAMP as [EmpDateStamp]
+
+from dbo.vwEmployeeHistWorkAssignment
+
+where 1=1
+
+and FIELD_NAME = 'FTE'
+) as t1 
+
+left join 
+
+
+(
+select distinct
+
+EMPLOYEE
+,SUBJECT
+,ACTION_CODE
+,DATE_STAMP
+,FIELD_NAME
+,OLD_VALUE
+,NEW_VALUE
+,EMPLOYEE + DATE_STAMP as [EmpDateStamp]
+
+from dbo.vwEmployeeHistWorkAssignment
+
+where 1=1
+
+and FIELD_NAME = 'JOB'
+and OLD_VALUE = 2994
+) as t2 ON t1.[EmpDateStamp] = t2.[EmpDateStamp]
+
+
+
+
+
+---------
+
+--left join 
+
+
+--(
+--select distinct
+
+--EMPLOYEE
+--,SUBJECT
+--,ACTION_CODE
+--,DATE_STAMP
+--,FIELD_NAME
+--,OLD_VALUE
+--,NEW_VALUE
+--,EMPLOYEE + DATE_STAMP as [EmpDateStamp]
+
+--from dbo.vwEmployeeHistWorkAssignment
+
+--where 1=1
+
+--and FIELD_NAME = 'JOB'
+--and OLD_VALUE = 2994
+--) as t3 ON t1.[EMPLOYEE] = t3.EMPLOYEE
+
+
+
+--------------
+--left join
+--(
+--select distinct
+
+--EMPLOYEE
+--,SUBJECT
+--,ACTION_CODE
+--,DATE_STAMP
+--,FIELD_NAME
+--,OLD_VALUE
+--,NEW_VALUE
+--,EMPLOYEE + DATE_STAMP as [EmpDateStamp]
+
+--from dbo.vwEmployeeHistWorkAssignment
+
+--where 1=1
+
+--and FIELD_NAME = 'FTE'
+--) as t4 on t3.EmpDateStamp = t4.EmpDateStamp
+
+
+
+
+
+
+
+--left join 
+
+
+--(
+--select distinct
+
+--EMPLOYEE
+--,SUBJECT
+--,ACTION_CODE
+--,DATE_STAMP
+--,FIELD_NAME
+--,OLD_VALUE
+--,NEW_VALUE
+--,EMPLOYEE + DATE_STAMP as [EmpDateStamp]
+
+--from dbo.vwEmployeeHistWorkAssignment
+
+--where 1=1
+
+--and FIELD_NAME = 'JOB'
+--and OLD_VALUE = 2440
+--) as t5 ON t1.[EMPLOYEE] = t5.EMPLOYEE
+
+
+
+--------------
+--left join
+--(
+--select distinct
+
+--EMPLOYEE
+--,SUBJECT
+--,ACTION_CODE
+--,DATE_STAMP
+--,FIELD_NAME
+--,OLD_VALUE
+--,NEW_VALUE
+--,EMPLOYEE + DATE_STAMP as [EmpDateStamp]
+
+--from dbo.vwEmployeeHistWorkAssignment
+
+--where 1=1
+
+--and FIELD_NAME = 'CostCenter'
+--) as t6 on t5.EmpDateStamp = t6.EmpDateStamp
+
+
+
+--left join
+--(
+--select distinct
+
+--EMPLOYEE
+--,SUBJECT
+--,ACTION_CODE
+--,DATE_STAMP
+--,FIELD_NAME
+--,OLD_VALUE
+--,NEW_VALUE
+--,EMPLOYEE + DATE_STAMP as [EmpDateStamp]
+
+--from dbo.vwEmployeeHistWorkAssignment
+
+--where 1=1
+
+--and FIELD_NAME = 'FTE'
+--) as t7 on t5.EmpDateStamp = t7.EmpDateStamp
+
+WHERE 1=1
+and t2.OLD_VALUE = 2994
+--and t2.NEW_VALUE = 3849
+
+order by t1.DATE_STAMP asc
